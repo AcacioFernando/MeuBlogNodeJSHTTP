@@ -1,0 +1,13 @@
+extends layout
+block content
+   .row
+      form(action='/admin', method='post')
+         p #{mensagem}
+            h1.text-center Login
+            form.form.col-md-10.center-block
+               .form-group
+                  input.form-control(type='password', name='password', placeholder='Password', id='admin_check')
+               .form-group
+                  input.form-control(type='password', name='passwordconfirm', placeholder='Confirm Password', id='admin_check')
+               .form-group
+                  button.btn.btn-primary.btn-lg.btn-block Sign In

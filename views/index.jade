@@ -1,0 +1,307 @@
+extends layout
+block content
+    .row
+        #myCarousel.carousel.slide(data-ride="carousel")
+            // Indicators
+            ol.carousel-indicators
+                li.active(data-target="#myCarousel", data-slide-to="0")
+                li(data-target="#myCarousel", data-slide-to="1")
+                li(data-target="#myCarousel", data-slide-to="2")
+                li(data-target="#myCarousel", data-slide-to="3")
+            // Wrapper for slides
+            .carousel-inner(role="listbox")
+                .item.active
+                    img(src="https://content.halocdn.com/media/Default/games/halo-3/media/h3_010-68adc78167c54528b438982a40ff04a7.jpg", alt="Chania")
+                    .carousel-caption
+                        h3 HALO
+                        p The atmosphere in Chania has a touch of Florence and Venice.
+                .item
+                    img(src="http://spawnon.me/wp-content/uploads/2014/01/gears-of-war-3-in-hd-with-1080p-store-for-background.jpg", alt="Chania")
+                    .carousel-caption
+                        h3 GEAR OF WAR
+                        p The atmosphere in Chania has a touch of Florence and Venice.
+                .item
+                    img(src="http://images-eds.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTct9GBePkGhABI_Vj4KUq7.zs3TxUAMPXK.i5iBkRAomzWRtlm8_AqOxpw8O13ced8FSaTtoRNBlU5YWOVPFXsgcDxfifX0CadFywTHiIypBpIGRL4MZTTBuuAewMAxWAk1l6d0j5wNdV43ihe.LpOmP6JvAAjTlYv6LYgTSgQk78-&format=jpg", alt="Flower")
+                    .carousel-caption
+                        h3 Flowers
+                        p Beatiful flowers in Kolymbari, Crete.
+                .item
+                    img(src="http://static-8.nexusmods.com/15/mods/428/images/14-1-1428987769.jpg", alt="Flower")
+                    .carousel-caption
+                        h3 BORDERLANDS
+                        p Beatiful flowers in Kolymbari, Crete.
+            // Left and right controls
+            a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
+                span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+                span.sr-only Previous
+            a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
+                span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+                span.sr-only Next
+        .container.sections-wrapper
+            .row
+                .primary.col-md-8.col-sm-12.col-xs-12
+                    each post, i in posts
+                        if post.content.length < 200
+                            - var content = post.content;
+                        else
+                            - var content = post.content.substring(0, 300) + '...';
+                        section.about.section.post
+                            .section-inner
+                                h3.title
+                                    a(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank') #{post.title}
+                                a.col-md-6.col-sm-6.col-xs-12(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank')
+                                    img.img-responsive.project-image(src='http://static-8.nexusmods.com/15/mods/428/images/14-1-1428987769.jpg', alt='project name')
+                                .content
+                                    p
+                                        | #{content}
+                                    p
+                                        a.more-link(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  Leia mais
+                        // //content
+                    // //section-inner
+                // //primary
+                .secondary.col-md-4.col-sm-12.col-xs-12
+                    aside.info.aside.section
+                        .section-inner
+                            h2.heading.sr-only Basic Information
+                            .content
+                                ul.list-unstyled
+                                    li
+                                        i.fa.fa-map-marker
+                                        span.sr-only Location:
+                                        | San Francisco, US
+                                    li
+                                        i.fa.fa-envelope-o
+                                        span.sr-only Email:
+                                        a(href='#') jameslee@website.com
+                                    li
+                                        i.fa.fa-link
+                                        span.sr-only Website:
+                                        a(href='#') http://www.website.com
+                            // //content
+                        // //section-inner
+                    // //aside
+                    aside.skills.aside.section
+                        .section-inner
+                            h2.heading Skills
+                            .content
+                                p.intro
+                                    | Intro about your skills goes here. Keep the list lean and only show your primary skillset. You can always provide a link to your Linkedin or Coderwall profile so people can get more info there.
+                                .skillset
+                                    .item
+                                        h3.level-title
+                                            | Python & Django
+                                            span.level-label(data-toggle='tooltip', data-placement='left', data-animation='true', title='You can use the tooltip to add more info...') Expert
+                                        .level-bar
+                                            .level-bar-inner(data-level='96%')
+                                        // //level-bar
+                                    // //item
+                                    .item
+                                        h3.level-title
+                                            | Javascript & jQuery
+                                            span.level-label Expert
+                                        .level-bar
+                                            .level-bar-inner(data-level='96%')
+                                        // //level-bar
+                                    // //item
+                                    .item
+                                        h3.level-title
+                                            | HTML5, CSS3, SASS & LESS
+                                            span.level-label Expert
+                                        .level-bar
+                                            .level-bar-inner(data-level='96%')
+                                        // //level-bar
+                                    // //item
+                                    .item
+                                        h3.level-title
+                                            | Ruby on Rails
+                                            span.level-label Pro
+                                        .level-bar
+                                            .level-bar-inner(data-level='85%')
+                                        // //level-bar
+                                    // //item
+                                    p
+                                        a.more-link(href='#')
+                                            i.fa.fa-external-link
+                                            |  More on Coderwall
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.testimonials.aside.section
+                        .section-inner
+                            h2.heading Testimonials
+                            .content
+                                .item
+                                    blockquote.quote
+                                        p
+                                            i.fa.fa-quote-left
+                                            | James is an excellent software engineer and he is passionate about what he does. You can totally count on him to deliver your projects!
+                                    p.source
+                                        span.name Tim Adams
+                                        br
+                                        span.title Curabitur commodo
+                                // //item
+                                p
+                                    a.more-link(href='#')
+                                        i.fa.fa-external-link
+                                        |  More on Linkedin
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.education.aside.section
+                        .section-inner
+                            h2.heading Education
+                            .content
+                                .item
+                                    h3.title
+                                        i.fa.fa-graduation-cap
+                                        |  MSc Psychology and Computer Science
+                                    h4.university
+                                        | University College London
+                                        span.year (2011-2012)
+                                // //item
+                                .item
+                                    h3.title
+                                        i.fa.fa-graduation-cap
+                                        |  BSc Computer Science
+                                    h4.university
+                                        | University of Bristol
+                                        span.year (2008-2011)
+                                // //item
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.languages.aside.section
+                        .section-inner
+                            h2.heading Languages
+                            .content
+                                ul.list-unstyled
+                                    li.item
+                                        span.title
+                                            strong English:
+                                        span.level
+                                            | Native Speaker
+                                            br.visible-xs
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                    // //item
+                                    li.item
+                                        span.title
+                                            strong Spanish:
+                                        span.level
+                                            | Professional Proficiency
+                                            br.visible-sm.visible-xs
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                            i.fa.fa-star
+                                            i.fa.fa-star-half
+                                    // //item
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.blog.aside.section
+                        .section-inner
+                            h2.heading Latest Blog Posts
+                            p
+                                | You can use Sascha Depold's
+                                a(href='https://github.com/sdepold/jquery-rss', target='_blank') jQuery RSS plugin
+                                |  to pull in your blog post feeds.
+                            #rss-feeds.content
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.list.music.aside.section
+                        .section-inner
+                            h2.heading Favourite coding music
+                            .content
+                                ul.list-unstyled
+                                    li
+                                        i.fa.fa-headphones
+                                        a(href='#') Etiam hendrerit urna nunc
+                                    li
+                                        i.fa.fa-headphones
+                                        a(href='#') Ut sollicitudin in mauris non auctor
+                                    li
+                                        i.fa.fa-headphones
+                                        a(href='#') Etiam hendrerit urna nunc
+                                    li
+                                        i.fa.fa-headphones
+                                        a(href='#') Duis et felis bibendum
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.list.conferences.aside.section
+                        .section-inner
+                            h2.heading Conferences
+                            .content
+                                ul.list-unstyled
+                                    li
+                                        i.fa.fa-calendar
+                                        a(href='https://developer.apple.com/wwdc/', target='_blank') WWDC 2014
+                                        |  (San Francisco)
+                                    li
+                                        i.fa.fa-calendar
+                                        a(href='http://hive.aigaseattle.org/') Hive
+                                        |  (Seattle)
+                            // //content
+                        // //section-inner
+                    // //section
+                    aside.credits.aside.section
+                        .section-inner
+                            h2.heading Credits
+                            .content
+                                ul.list-unstyled
+                                    li
+                                        a(href='http://getbootstrap.com/', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  Bootstrap 3.2
+                                    li
+                                        a(href='http://fortawesome.github.io/Font-Awesome/', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  FontAwsome 4.1
+                                    li
+                                        a(href='http://jquery.com/', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  jQuery
+                                    li
+                                        a(href='http://caseyscarborough.com/projects/github-activity/', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  GitHub Activity Stream
+                                    li
+                                        a(href='https://github.com/sdepold/jquery-rss', target='_blank')
+                                            i.fa.fa-external-link
+                                            |  jQuery RSS
+                                    li
+                                        | Profile image:
+                                        a(href='https://www.flickr.com/photos/dotbenjamin/2577394151', target='_blank') Ben Smith
+                                    li
+                                        | iPad and iPhone mocks:
+                                        a(href='https://dribbble.com/perlerar', target='_blank') Regy Perlera
+                                hr
+                                p
+                                    | This responsive HTML5 CSS3 site template is handcrafted by UX designer
+                                    a(href='https://www.linkedin.com/in/xiaoying', target='_blank') Xiaoying Riley
+                                    |  at
+                                    a(href='http://themes.3rdwavemedia.com/', target='_blank') 3rd Wave Media
+                                    |  for developers and is
+                                    strong FREE
+                                    |  under the
+                                    a.dotted-link(href='http://creativecommons.org/licenses/by/3.0/', target='_blank') Creative Commons Attribution 3.0 License
+                                p
+                                    | We will improve or add new features to this template based on users' feedback so follow us on twitter to get notified when a new version is out!
+                                a.btn.btn-cta-secondary.btn-follow(href='https://twitter.com/3rdwave_themes', target='_blank')
+                                    i.fa.fa-twitter
+                                    |  Follow us
+                                a.btn.btn-cta-primary.btn-download(href='http://themes.3rdwavemedia.com/website-templates/free-responsive-website-template-for-developers/', target='_blank')
+                                    i.fa.fa-download
+                                    |  I want to download
+                            // //content
+                        // //section-inner
+                    // //section
+                // //secondary
+            // //row
+// //masonry
