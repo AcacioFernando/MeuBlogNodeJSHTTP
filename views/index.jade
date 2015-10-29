@@ -48,16 +48,28 @@ block content
                         section.about.section.post
                             .section-inner
                                 h3.title
-                                    a(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank') #{post.title}
+                                    a(href='/post/#{post._id}/#{post.title_sub}')= post.title
                                 a.col-md-6.col-sm-6.col-xs-12(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank')
                                     img.img-responsive.project-image(src='http://static-8.nexusmods.com/15/mods/428/images/14-1-1428987769.jpg', alt='project name')
                                 .content
                                     p
                                         | #{content}
                                     p
-                                        a.more-link(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank')
+                                        a(href='/post/#{post._id}/#{post.title_sub}')
                                             i.fa.fa-external-link
                                             |  Leia mais
+                                ul.list-inline
+                                    li
+                                        a(href='#') 2 Days Ago
+                                    li
+                                        a(href='#')
+                                            i.glyphicon.glyphicon-comment
+                                            |  4 Comments
+                                    li
+                                        a(href='#')
+                                            i.glyphicon.glyphicon-share
+                                            |  34 Shares
+
                         // //content
                     // //section-inner
                 // //primary

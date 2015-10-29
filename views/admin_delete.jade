@@ -1,0 +1,20 @@
+extends layout
+block content
+   h1 Deltar Posts
+   table.table
+      thead
+         tr
+            th Titulo
+            th Data
+            th Deletar
+      tbody
+      for post in posts
+         form(method='post')
+            tr
+               td #{post.title}
+                  input(type='hidden', name='title', value='#{post.title}')
+               td #{post.date}
+                  input(type='hidden', name='time', value='#{post.date}')
+               td
+                  input(type='submit', id='delete_btn', value='Deletar Post')
+

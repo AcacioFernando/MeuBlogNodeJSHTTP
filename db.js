@@ -1,5 +1,5 @@
 //Pre requisitos 
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema
     , ObjectId = Schema.ObjectId;
 
@@ -15,8 +15,9 @@ var postSchema = new Schema({
     title: { type: String },
     title_sub: { type: String },
     content: { type: String },
-    date: { type: String }
-})
+    date: { type: String },
+    img: {type : Buffer }
+});
 
 //  Schema para os comentários
 var commentSchema = new Schema({
@@ -26,7 +27,7 @@ var commentSchema = new Schema({
     name: { type: String },
     comment: { type: String },
     date: { type: String }
-})
+});
 
 
 var post = db.model('post', postSchema);
