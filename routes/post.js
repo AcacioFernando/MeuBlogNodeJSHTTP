@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var commentss = mongoose.model('comment');
+var db = require('../db');
 var post = mongoose.model('post');
 
 router.post('/:id/:title', function (req, res, next) {
