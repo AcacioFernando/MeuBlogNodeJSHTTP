@@ -29,12 +29,12 @@ block content
                         .row
                            .col-md-12
                               h2.page-header
-                              //Formul�rio
+                              //Formulário
                               .panel.panel-default
                                  .panel-heading
                                     .panel-title
                                        i.glyphicon.glyphicon-comment.pull-right
-                                       h4 Comentarios
+                                       h4 Comentários
                                  .panel-body
                                     form.form.form-vertical(action='/post/#{posts._id}/#{posts.title_sub}', method='post')
                                        .control-group
@@ -42,16 +42,16 @@ block content
                                           .controls
                                              input.form-control(type='text',name='name' placeholder='Escreva seu nome')
                                        .control-group
-                                          label Comentario
+                                          label Comentário
                                           .controls
-                                             textarea.form-control(id='comment_form', name='comment', placeholder='Escreva seu comentario')
+                                             textarea.form-control(id='comment_form', name='comment', placeholder='Escreva seu comentário')
 
                                        .control-group
                                           label
                                           .controls
                                              button.btn.btn-primary(type='submit')
                                                 | Post
-                                 // /End Formul�rio
+                                 // /End Formulário
 
 
                               section.comment-list
@@ -59,7 +59,7 @@ block content
                               for comments in comment
                                  if(controle == true)
                                     - controle = false
-                                    // Primeiro Coment�rio
+                                    // Primeiro Comentário
                                     article.row
                                        .col-md-2.col-sm-2.hidden-xs
                                           figure.thumbnail
@@ -79,7 +79,7 @@ block content
                                  else
                                     - controle = true
 
-                                     //Segundo Coment�rio
+                                     //Segundo Comentário
                                     article.row
                                        .col-md-10.col-sm-10
                                           .panel.panel-default.arrow.right

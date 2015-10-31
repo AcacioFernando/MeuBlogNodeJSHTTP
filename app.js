@@ -25,10 +25,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname +'/public')));
 
 app.use('/', routes);
+app.use('/post', post);
 app.use('/users', users);
 app.use('/admin', admin);
 app.use('/admin_login', admin);
-
+app.use('/erro', function(req, res) {
+  var err = new Error('Not Found');
+  err.status = 500;
+  res.render('error', err);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
