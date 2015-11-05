@@ -1,5 +1,141 @@
-extends layout
+extends layout_admin
 block content
+       //
+        MENU
+        ==================================================
+       .container-fluid
+         .row
+           .col-sm-3
+             // Left column
+             a(href='#')
+               strong
+                 i.glyphicon.glyphicon-wrench
+                 |  Opções
+             hr
+             ul.nav.nav-stacked
+               li.nav-header
+                 a(href='#', data-toggle='collapse', data-target='#userMenu')
+                   | Settings
+                   i.glyphicon.glyphicon-chevron-down
+                 ul#userMenu.nav.nav-stacked.collapse.in
+                   li.active
+                     a(href='/')
+                       i.glyphicon.glyphicon-home
+                       |  Home
+                   li
+                     a(href='/admin/novoPost')
+                       i.glyphicon.glyphicon-envelope
+                       |  Novo Post
+                   li
+                     a(href='/admin/deletePost')
+                       i.glyphicon.glyphicon-trash
+                       |  Deletar Post
+                   li
+                     a(href='#')
+                       i.glyphicon.glyphicon-pencil
+                       |  Editar Posts
+
+                 a(href='#', data-toggle='collapse', data-target='#menu3')
+                   | Social Media
+                   i.glyphicon.glyphicon-chevron-right
+                 ul#menu3.nav.nav-stacked.collapse
+                   li
+                     a(href='')
+                       i.glyphicon.glyphicon-circle
+                       |  Facebook
+                   li
+                     a(href='')
+                       i.glyphicon.glyphicon-circle
+                       |  Twitter
+
+           //
+             CONTEUDO
+             ==================================================
+           .col-sm-9
+             // column 2
+             ul.list-inline.pull-right
+               li
+                 a(href='#')
+                   i.glyphicon.glyphicon-cog
+               li.dropdown
+                 a.dropdown-toggle(href='#', data-toggle='dropdown')
+                   i.glyphicon.glyphicon-comment
+                   span.count 3
+                 ul.dropdown-menu(role='menu')
+                   li
+                     a(href='#') 1. Is there a way..
+                   li
+                     a(href='#') 2. Hello, admin. I would..
+                   li
+                     a(href='#')
+                       strong All messages
+               li
+                 a(href='#')
+                   i.glyphicon.glyphicon-user
+
+             a(href='#')
+               strong
+                 i.glyphicon.glyphicon-dashboard
+                 |  Painel de Controle
+             hr
+             .row
+               // center left
+               .col-md-11
+                 .panel.panel-default
+                   .panel-heading
+                     .panel-title
+                       i.glyphicon.glyphicon-wrench.pull-right
+                       h4 Novo Post
+                   .panel-body
+                     form.form.form-vertical(action='/admin/novoPost',method='post', enctype='multipart/form-data')
+                       .control-group
+                         label Titulo
+                         .controls
+                           input.form-control(name='title', type='text', placeholder='Entre com o titulo')
+                       .control-group
+                         label Subtitulo
+                         .controls
+                           input.form-control(name='subtitle', type='text', placeholder='Entre com o subtitulo')
+                       .control-group
+                         label Texto Post
+                         .controls
+                           textarea.form-control(id='formNewTextarea', name='body', placeholder='Escreva seu post')
+                       .control-group
+                         label Categoria
+                         .controls
+                           select.form-control( name='categoria')
+                             option XOne
+                             option WiiU
+                             option PC
+                             option Estratégia
+                             option PS4
+                             option Tecnologia
+                             option 3DS
+                             option Reviews
+                             option XBox360
+                             option PS3
+                             option Mobile
+                             option Videos
+
+                       .control-group
+                         label Imagem
+                           .controls
+                           .fileinput.fileinput-new(data-provides='fileinput')
+                               .fileinput-preview.thumbnail(data-trigger='fileinput', style='width: 500px; height: 150px;')
+                               div
+                                   span.btn.btn-default.btn-file
+                                       span.fileinput-new Select image
+                                       span.fileinput-exists Change
+                                       input(type='file', name='imgPost')
+                                   a.btn.btn-default.fileinput-exists(href='#', data-dismiss='fileinput') Remove
+                       .control-group
+                         label
+                         .controls
+                           button.btn.btn-primary(type='submit')
+                             | Post
+
+
+//
     .container
         #formNew
             h1 Novo Post

@@ -1,6 +1,9 @@
 extends layout
 block content
-    .row
+        //
+         CAROUSEL
+         ==================================================
+
         #myCarousel.carousel.slide(data-ride="carousel")
             // Indicators
             ol.carousel-indicators
@@ -10,26 +13,34 @@ block content
                 li(data-target="#myCarousel", data-slide-to="3")
             // Wrapper for slides
             .carousel-inner(role="listbox")
-                .item.active
-                    img(src="https://content.halocdn.com/media/Default/games/halo-3/media/h3_010-68adc78167c54528b438982a40ff04a7.jpg", alt="Chania")
-                    .carousel-caption
-                        h3 HALO
-                        p The atmosphere in Chania has a touch of Florence and Venice.
-                .item
-                    img(src="http://spawnon.me/wp-content/uploads/2014/01/gears-of-war-3-in-hd-with-1080p-store-for-background.jpg", alt="Chania")
-                    .carousel-caption
-                        h3 GEAR OF WAR
-                        p The atmosphere in Chania has a touch of Florence and Venice.
-                .item
-                    img(src="http://images-eds.xboxlive.com/image?url=8Oaj9Ryq1G1_p3lLnXlsaZgGzAie6Mnu24_PawYuDYIoH77pJ.X5Z.MqQPibUVTct9GBePkGhABI_Vj4KUq7.zs3TxUAMPXK.i5iBkRAomzWRtlm8_AqOxpw8O13ced8FSaTtoRNBlU5YWOVPFXsgcDxfifX0CadFywTHiIypBpIGRL4MZTTBuuAewMAxWAk1l6d0j5wNdV43ihe.LpOmP6JvAAjTlYv6LYgTSgQk78-&format=jpg", alt="Flower")
-                    .carousel-caption
-                        h3 Flowers
-                        p Beatiful flowers in Kolymbari, Crete.
-                .item
-                    img(src="http://static-8.nexusmods.com/15/mods/428/images/14-1-1428987769.jpg", alt="Flower")
-                    .carousel-caption
-                        h3 BORDERLANDS
-                        p Beatiful flowers in Kolymbari, Crete.
+                if posts.length > 0
+                    each post, i in posts
+                        if i > 2
+
+                        else
+                            if i == 0
+                                .item.active
+                                    img(src="#{post.img}", alt="#{post.title}")
+                                    .carousel-caption
+                                        h3
+                                            a(href='/post/#{post._id}/#{post.title_sub}')= post.title
+                                        p
+                                            | #{post.sub_title}
+                            else
+                                .item
+                                    img(src="#{post.img}", alt="#{post.title}")
+                                    .carousel-caption
+                                        h3
+                                            a(href='/post/#{post._id}/#{post.title_sub}')= post.title
+                                        p
+                                            | #{post.sub_title}
+                else
+                    .item.active
+                        img(src="/images/img_posts/sem_foto.gif", alt="Sem foto")
+                        .carousel-caption
+                            h3 Sem Foto
+                            p Sem posts.
+
             // Left and right controls
             a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
                 span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
@@ -37,60 +48,81 @@ block content
             a.right.carousel-control(href="#myCarousel", role="button", data-slide="next")
                 span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
                 span.sr-only Next
-        .container.sections-wrapper
-            .row
-                .primary.col-md-8.col-sm-12.col-xs-12
-                    each post, i in posts
-                        if post.content.length < 200
-                            - var content = post.content;
-                        else
-                            - var content = post.content.substring(0, 300) + '...';
-                        section.about.section.post
-                            .section-inner
-                                h3.title
-                                    a(href='/post/#{post._id}/#{post.title_sub}')= post.title
-                                a.col-md-6.col-sm-6.col-xs-12(href='http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/', target='_blank')
-                                    img.img-responsive.project-image(src='http://static-8.nexusmods.com/15/mods/428/images/14-1-1428987769.jpg', alt='project name')
-                                .content
-                                    p
-                                        | #{content}
-                                    p
-                                        a(href='/post/#{post._id}/#{post.title_sub}')
-                                            i.fa.fa-external-link
-                                            |  Leia mais
-                                ul.list-inline.rodape-post
-                                    li
-                                        a(href='#') 2 Days Ago
-                                    li
-                                        a(href='#')
-                                            i.glyphicon.glyphicon-comment
-                                            |  4 Comments
-                                    li
-                                        a(href='#')
-                                            i.glyphicon.glyphicon-share
-                                            |  34 Shares
 
-                        // //content
-                    // //section-inner
-                // //primary
+
+
+        .container.sections-wrapper.tamanho_conteudo
+            .row
+                //
+                 PRIMEIRA COLUNA DE NOTICIAS
+                 ==================================================
+                .primary.col-md-8.col-sm-12.col-xs-12
+                    if posts != null
+                        each post, i in posts
+                            if post.content.length < 200
+                                - var content = post.content;
+                            else
+                                - var content = post.content.substring(0, 300) + '...';
+                            section.about.section.post
+                                .section-inner
+                                    h3.title.titulo
+                                        a(href='/post/#{post._id}/#{post.title_sub}')= post.title
+                                    h3.lead.sub_title
+                                            | #{post.sub_title}
+                                    a.col-md-6.col-sm-6.col-xs-12(src='#{post.img}', target='_blank')
+                                        img.img-responsive.project-image(src='#{post.img}', alt='project name')
+                                    .content
+                                        p
+                                            span.categoria_post
+                                                | &nbsp #{post.category} &nbsp
+
+                                            | #{content}
+                                        p
+                                            a(href='/post/#{post._id}/#{post.title_sub}')
+                                                i.fa.fa-external-link
+                                                |  Leia mais
+                                    ul.list-inline.rodape-post
+                                        li
+                                            a(href='#') 2 Days Ago
+                                        li
+                                            a(href='#')
+                                                i.glyphicon.glyphicon-share
+                                                |  34 Shares
+                                        li
+                                            - var formGostei = 'formG'+i
+                                            - var formNGostei = 'formNG'+i
+                                            form(action='/gostei/#{post._id}/#{post.title_sub}', method='post', id= '#{formGostei}' )
+                                                a(href="javascript:;" onclick="document.getElementById('#{formGostei}').submit();", method='post')
+                                                    i.glyphicon.glyphicon-thumbs-up
+                                                    |  #{post.gostei} Gostei
+                                        li
+                                            form(action='/nao_gostei/#{post._id}/#{post.title_sub}', method='post', id='#{formNGostei}')
+                                                a(href="javascript:;" onclick="document.getElementById('#{formNGostei}').submit();", method='post')
+                                                    i.glyphicon.glyphicon-thumbs-down
+                                                    |  #{post.nao_gostei} Não Gostei
+
+                    else
+                            section.about.section.post
+                                .section-inner
+                                    h3.title.titulo Nenhum resultado encontrado
+
+
+
+
+
+
+                //
+                 SEGUNDA COLUNA DE NOTICIAS
+                 ==================================================
                 .secondary.col-md-4.col-sm-12.col-xs-12
-                    aside.info.aside.section
-                        .section-inner
-                            h2.heading.sr-only Basic Information
-                            .content
-                                ul.list-unstyled
-                                    li
-                                        i.fa.fa-map-marker
-                                        span.sr-only Location:
-                                        | Belo Horizonte, MG
-                                    li
-                                        i.fa.fa-envelope-o
-                                        span.sr-only Email:
-                                        a(href='#') afo.fernando@gmail.com
-                                    li
-                                        i.fa.fa-link
-                                        span.sr-only Website:
-                                        a(href='#') http://www.cefetmg.br/
+                    form.login-form(action='/buscar', method='post')
+                        aside.info.aside.section
+                            .section-inner
+                                .input-group
+                                    input#srch-term.form-control.size_search(type='text', placeholder='Buscar', name='srch_term')
+                                    .input-group-btn
+                                        button.btn.btn-default.btn-primary(type='submit')
+                                            i.glyphicon.glyphicon-search
                             // //content
                         // //section-inner
                     // //aside

@@ -1,5 +1,5 @@
 /**
- * Created by Acácio Oliveira on 27/10/2015.
+ * Created by AcÃ¡cio Oliveira on 27/10/2015.
  */
 
 
@@ -11,10 +11,19 @@ var mongoose = require('mongoose');
 var post = mongoose.model('post');
 var formidable = require('formidable');
 var fs = require('fs');
+var db = require('../db');
+
+var sess;
 
 router.get('/', function (req, res, next) {
-    console.log("admin_login");
-    res.render('admin_login');
+    console.log('Entrou no admim');
+    console.log(req.session.logged);
+    if (req.session.logged == true) {
+        res.redirect('/admin/novoPost')
+    } else {
+        console.log("admin_login");
+        res.render('admin_login');
+    }
 });
 
 router.get('/admin_login', function (req, res, next) {
@@ -23,6 +32,7 @@ router.get('/admin_login', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+    sess = req.session;
 
     var password1 = req.body.password;
     var password2 = req.body.passwordconfirm;
@@ -31,14 +41,14 @@ router.post('/', function (req, res, next) {
     console.log(password2);
 
     if (password1 == 123) {
-        console.log('password1 é password');
+        console.log('password1 Ã© password');
         if (password1 == password2) {
-            console.log('password1 é password2');
-            //  req.session.admin = 'true';
+            console.log('password1 Ã© password2');
+            req.session.logged = true;
             res.redirect('/admin/novoPost')
         } else {
-
-            error = 'Passwords não confere';
+            req.session.logged = false;
+            error = 'Passwords nÃ£o confere';
             console.log(error);
             res.redirect('/admin')
         }
@@ -81,6 +91,7 @@ router.post('/novoPost', function (req, res, next) {
 
     console.log("salvarPost");
 
+    var error = null;
     //specific time
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -90,60 +101,91 @@ router.post('/novoPost', function (req, res, next) {
     var year = date.getFullYear();
     var day = date.getDate();
     var time = month + '/' + day + '/' + year + " at " + formatAMPM(date);
-    //organize time so it looks nice
-    /*
-
-    var title = req.body.title;
-    var title_sub = title.split(' ').join('-');
-
-    var body = req.body.body;
-    */
+    var fstream;
     var form = new formidable.IncomingForm();
-    form.type =  'multipart';
-    form.parse(req, function (err, fields, files) {
-        var img = files.imgPost;
-        console.log(img);
-        try {
-            fs.readFile(img.path, function (err, data) {
-                post.create({
-                    title: fields.title,
-                    title_sub: fields.title.split(' ').join('-'),
-                    content: fields.body,
-                    date: time,
-                    img: data
-                }, function (err, user) {
-                    if (err) {
-                        error = err;
-                        //redirecting to homepage
-                        res.redirect('/erro');
-                    }
-                    if (user) {
-                        error = null;
-                        res.redirect('/#dashboard');
-                    }
-                });
+    form.type = 'multipart';
 
+    try {
+        form.parse(req, function (err, fields, files) {
+
+            console.log(200, {'content-type': 'text/plain'});
+            console.log('received upload:\n\n');
+            var title_post = fields.title.split(' ').join('-');
+            var image = files.imgPost
+                , image_upload_path_old = image.path
+                , image_upload_path_new = '/images/img_posts/'
+                , image_upload_name = image.name.split(' ').join('-')
+                , image_name = image_upload_path_new + title_post + image_upload_name
+                , image_upload_path_name = './public' + image_upload_path_new + title_post + image_upload_name
+                ;
+
+            console.log(image_name);
+            post.create({
+                title: fields.title,
+                title_sub: fields.title.split(' ').join('-'),
+                content: fields.body,
+                category: fields.categoria,
+                sub_title: fields.subtitle,
+                date: time,
+                img: image_name,
+                gostei: Number(0),
+                nao_gostei: Number(0)
+            }, function (err, user) {
+                if (err) {
+                    error = err;
+                    //redirecting to homepage
+                    res.redirect('/erro');
+                }
+                if (user) {
+                    console.log("Sem errro ");
+                    // Testa se o diretÃ³rio upload existe na pasta atual
+                    if (fs.existsSync(image_upload_path_new)) {
+                        fs.rename(
+                            image_upload_path_old,
+                            image_upload_path_name,
+                            function (err) {
+                                if (err) {
+                                    error = err;
+                                    res.redirect('/erro');
+                                }
+                                console.log("Upload Finished of " + image_name);
+                                error = null;
+                                // res.redirect('/novoPost');
+                            });
+                    } // Se nÃ£o cria o diretÃ³rio upload
+                    else {
+                        fs.mkdir(image_upload_path_new, function (err) {
+                            if (err) {
+                                error = err;
+                                //   res.redirect('/erro');
+                            }
+                            fs.rename(
+                                image_upload_path_old,
+                                image_upload_path_name,
+                                function (err) {
+                                    console.log("Upload Finished of " + image_name);
+                                    error = null;
+                                    //  res.redirect('/admin/novoPost');         //where to go next
+                                });
+                        });
+                    }
+
+                }
             });
-        } catch (err) {
-            res.redirect('/erro');
-        }
-    });
-
-    /*
-    //Submitting to database
-    var newPost = post({
-        title: title,
-        title_sub: title_sub,
-        content: body,
-        date: time
-    });
-    newPost.save();
-
-    //redirecting to homepage
-    res.redirect('/');
-    */
 
 
+        });
+    } catch (err) {
+        res.redirect('/erro');
+    }
+
+    console.log(error);
+    if (error == null) {
+
+        res.redirect('/admin/novoPost');
+    } else {
+        res.redirect('/erro');
+    }
 });
 
 //deleting posts functions
@@ -166,10 +208,59 @@ router.post('/deletePost', function (req, res, next) {
     var title1 = req.body.title;
     var time = req.body.time;
     console.log(title1);
-    post.findOne({"title": title1, "date": time}, function (err, match) {
-        console.log(match);
-        if (match) {
-            match.remove()
+    post.findOne({"title": title1, "date": time}, function (err, post) {
+        console.log('Achei' + __dirname);
+        console.log(post);
+        if (post) {
+
+/*
+            try {
+                var files = fs.readdirSync(__dirname + '/public/images/img_posts/');
+                console.log(files);
+            }
+            catch (e) {
+                console.log("Falhou");
+                return;
+            }
+            if (files.length > 0)
+                for (var i = 0; i < files.length; i++) {
+                    var filePath = __dirname + '/' + files[i];
+                    console.log(filePath);
+                    if (fs.statSync(filePath).isFile()) {
+                        fs.unlinkSync(filePath);
+                    }
+                }
+            fs.rmdirSync(dirPath);
+
+
+            // fs.unlink(__dirname +'/public/'+ post.img);
+
+            /*  (function next(err, result) {
+             if (err) return console.error("error in next()", err);
+             if (list_file_to_delete.length === 0) return;
+             var filename = list_of_files.splice(0,1)[0];
+             console.log(filename);
+             fs.unlink(filename, next);
+             }());
+
+             exports.deletePhoto = function (req, res) {
+             Photos.remove({_id: req.params.id}, function(err, photo) {
+             if(err) {
+             return res.send({status: "200", response: "fail"});
+             }
+             fs.unlink(photo.path, function() {
+             res.send ({
+             status: "200",
+             responseType: "string",
+             response: "success"
+             });
+             });
+             });
+             };
+
+             */
+
+            post.remove();
             console.log('removed');
             res.redirect('/admin/deletePost');
         } else {
@@ -180,54 +271,11 @@ router.post('/deletePost', function (req, res, next) {
 
 });
 
+router.get('/logout', function (req, res) {
+    req.session.logged = false;
+    console.log(req.session);
+    console.log('logged-out')
+    res.redirect('/');
+});
 module.exports = router;
-
-
-exports.admin_edit = function (req, res) {
-
-    post.findOne({_id: req.params.id}, function (err, post) {
-        if (post) {
-            res.render('admin_edit', {title: title, subTitle: subTitle, post: post})
-        } else {
-            res.redirect('/admin')
-        }
-    });
-};
-exports.admin_edit_post_handler = function (req, res) {
-    body = req.body.body;
-    title1 = req.body.title;
-
-    post.findOne({title: title1}, function (err, post) {
-        post.content = body;
-        post.save();
-        console.log('edited post complete');
-        res.redirect('/');
-    })
-}
-
-//admin check functions
-exports.admin_check_post_handler = function (req, res) {
-    var password1 = req.body.password;
-    var password2 = req.body.passwordconfirm;
-    console.log('passed');
-    console.log(password1);
-    console.log(password2);
-    if (password1 == 123) {
-        console.log('password1 is password');
-        if (password1 == password2) {
-            console.log('password1 is password2');
-            //  req.session.admin = 'true';
-            res.redirect('/admin/new')
-        } else {
-
-            error = 'Passwords do not match';
-            console.log(error);
-            res.redirect('/admin')
-        }
-    } else {
-        error = 'Wrong Password';
-        console.log(error);
-        res.redirect('/admin');
-    }
-};
 

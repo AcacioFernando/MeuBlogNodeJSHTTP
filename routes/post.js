@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var commentss = mongoose.model('comment');
 var db = require('../db');
 var post = mongoose.model('post');
+var db = require('../db');
+var sess;
 
 router.post('/:id/:title', function (req, res, next) {
     console.log("Salvar comentários");
@@ -46,20 +48,23 @@ router.post('/:id/:title', function (req, res, next) {
 });
 
 router.get('/:id/:title', function (req, res, next) {
+
+    sess=req.session;
+    console.log(sess);
     console.log("Post");
     id = req.params.id;
     post.find({'_id': id}, function (err, post) {
         if (post) {
             commentss.find({'postid': id}, function (err, comment) {
                 if (comment) {
-                    res.render('post_view', {title: 'title', subTitle: 'title', post: post, comment: comment})
+                    res.render('post_view', {title: 'title', subTitle: 'title', posts: post, comment: comment})
                 } else {
-                    res.render('post_view', {title: 'title', subTitle: 'title', post: post, comment: null})
+                    res.render('post_view', {title: 'title', subTitle: 'title', posts: post, comment: null})
                 }
             });
 
         } else {
-            res.render('post_view', {title: title, subTitle: subTitle, post: null, comment: null})
+            res.render('post_view', {title: title, subTitle: subTitle, posts: null, comment: null})
         }
     });
 

@@ -1,13 +1,16 @@
-extends layout
+extends layout_login
 block content
-   .row
-      form(action='/admin', method='post')
-         p #{mensagem}
-            h1.text-center Login
-            form.form.col-md-10.center-block
-               .form-group
-                  input.form-control(type='password', name='password', placeholder='Password', id='admin_check')
-               .form-group
-                  input.form-control(type='password', name='passwordconfirm', placeholder='Confirm Password', id='admin_check')
-               .form-group
-                  button.btn.btn-primary.btn-lg.btn-block Sign In
+         form.login-form(action='/admin', method='post')
+            .login-wrap
+               p.login-img
+                  i.glyphicon.glyphicon-user.font_login
+               .input-group
+                  span.input-group-addon
+                     i.icon_profile
+                  input.form-control(type='text', name='password', placeholder='Usuario', id='admin_check')
+               .input-group
+                  span.input-group-addon
+                     i.icon_key_alt
+                  input.form-control(type='password', name='passwordconfirm', placeholder='Senha', id='admin_check')
+               button.btn.btn-primary.btn-lg.btn-block(type='submit') Login
+               button.btn.btn-info.btn-lg.btn-block(href='/index') Cancelar

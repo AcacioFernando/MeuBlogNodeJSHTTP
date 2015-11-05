@@ -1,0 +1,80 @@
+doctype html
+html
+    head
+        meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title #{title} - My Express Application
+        link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/stylesHeet.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/jasny-bootstrap.min.css')
+        script(src='/javascripts/modernizr-2.6.2.js')
+    //
+     NAVBAR
+     ==================================================
+    body
+        //
+          header-img start
+          ==============================
+        section#hero-area
+            img.img-responsive(src='http://www.endymiongames.com/wp-content/uploads/2015/06/NMND-showcase.jpg', alt='')
+        //
+          Header start
+          ==============================
+        nav#navigation
+            .container
+                .row
+                    .col-md-12
+                        .block
+                            nav.navbar.navbar-default
+                                .container-fluid
+                                    // Brand and toggle get grouped for better mobile display
+                                    .navbar-header
+                                        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                                            span.sr-only Toggle navigation
+                                            span.icon-bar
+                                            span.icon-bar
+                                            span.icon-bar
+                                        a.navbar-brand(href='#')
+                                            img(src='images/logo.png', alt='Logo')
+                                    // Collect the nav links, forms, and other content for toggling
+                                    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                                        ul#top-nav.nav.navbar-nav.navbar-right
+                                            li
+                                                a(href='#hero-area') Home
+                                            li
+                                                a(href='#about-us') about us
+                                            li
+                                                a(href='#blog') Blog
+                                            li
+                                                a(href='#price') menu
+                                            li
+                                                a(href='#subscribe') news
+                                            li
+                                                a(href='#contact-us') contacts
+                                    // /.navbar-collapse
+                                // /.container-fluid
+                    // .col-md-12 close
+                // .row close
+            // .container close
+        // header close
+
+
+    block content
+    hr
+    // ******FOOTER******
+    footer.footer
+        .container.text-center
+            small.copyright
+                | Designed with
+                i.fa.fa-heart
+                |  by
+                a(href='http://themes.3rdwavemedia.com', target='_blank') Xiaoying Riley
+                |  for developers
+        // //container
+    // //footer
+    script(src='/javascripts/jquery-1.10.2.js')
+    script(src='/javascripts/bootstrap.js')
+    script(src='/javascripts/respond.js')
+    script(src='/javascripts/jasny-bootstrap.min.js')
+    block scripts
+

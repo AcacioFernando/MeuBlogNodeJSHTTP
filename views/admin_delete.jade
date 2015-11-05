@@ -1,5 +1,125 @@
-extends layout
+extends layout_admin
 block content
+   //
+    MENU
+    ==================================================
+   .container-fluid
+      .row
+         .col-sm-3
+            // Left column
+            a(href='#')
+               strong
+                  i.glyphicon.glyphicon-wrench
+                  |  Opções
+            hr
+            ul.nav.nav-stacked
+               li.nav-header
+                  a(href='#', data-toggle='collapse', data-target='#userMenu')
+                     | Settings
+                     i.glyphicon.glyphicon-chevron-down
+                  ul#userMenu.nav.nav-stacked.collapse.in
+                     li.active
+                        a(href='/')
+                           i.glyphicon.glyphicon-home
+                           |  Home
+                     li
+                        a(href='/admin/novoPost')
+                           i.glyphicon.glyphicon-envelope
+                           |  Novo Post
+                     li
+                        a(href='/admin/deletePost')
+                           i.glyphicon.glyphicon-trash
+                           |  Deletar Post
+                     li
+                        a(href='#')
+                           i.glyphicon.glyphicon-pencil
+                           |  Editar Posts
+                  a(href='#', data-toggle='collapse', data-target='#menu3')
+                     | Social Media
+                     i.glyphicon.glyphicon-chevron-right
+                  ul#menu3.nav.nav-stacked.collapse
+                     li
+                        a(href='')
+                           i.glyphicon.glyphicon-circle
+                           |  Facebook
+                     li
+                        a(href='')
+                           i.glyphicon.glyphicon-circle
+                           |  Twitter
+         //
+           CABEÇALHO
+           ==================================================
+         .col-sm-9
+            // column 2
+            ul.list-inline.pull-right
+               li
+                  a(href='#')
+                     i.glyphicon.glyphicon-cog
+               li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown')
+                     i.glyphicon.glyphicon-comment
+                     span.count 3
+                  ul.dropdown-menu(role='menu')
+                     li
+                        a(href='#') 1. Is there a way..
+                     li
+                        a(href='#') 2. Hello, admin. I would..
+                     li
+                        a(href='#')
+                           strong All messages
+               li
+                  a(href='#')
+                     i.glyphicon.glyphicon-user
+            a(href='#')
+               strong
+                  i.glyphicon.glyphicon-dashboard
+                  |  Painel de Controle
+            hr
+            .row
+               //
+                 CONTEUDO
+                 ==================================================
+               .col-md-11
+                  .panel.panel-default
+                     .panel-heading
+                        .panel-title
+                           i.glyphicon.glyphicon-trash.pull-right
+                           h4 Deletar Posts
+                     .panel-body
+                           .table-responsive
+                              table.table.table-striped
+                                 thead
+                                    tr
+                                       th Imagem
+                                       th Titulo
+                                       th Noticia
+                                       th Data de Publicação
+                                       th Deletar
+                                 tbody
+                                    for post in posts
+                                       if post.content.length < 200
+                                          - var content = post.content;
+                                       else
+                                          - var content = post.content.substring(0, 100) + '...';
+                                       form(method='post')
+                                          tr
+                                             td
+                                                img.img-responsive.img-rounded(src="#{post.img}", alt="Imagem Responsiva" width="150" height="100")
+                                             td #{post.title}
+                                                input(type='hidden', name='title', value='#{post.title}')
+                                             td #{content}
+                                                input(type='hidden', name='content', value='#{content}')
+                                             td #{post.date}
+                                                input(type='hidden', name='time', value='#{post.date}')
+                                             td
+                                                input(type='submit', id='delete_btn', value='Deletar Post')
+
+
+
+
+
+
+//
    h1 Deltar Posts
    table.table
       thead

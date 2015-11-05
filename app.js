@@ -1,10 +1,11 @@
+
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
-var favicon = require('serve-favicon');
+//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
@@ -12,6 +13,7 @@ var post = require('./routes/post');
 
 var app = express();
 
+var sess;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -22,6 +24,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: 'ssshhhhh'}));
 app.use(express.static(path.join(__dirname +'/public')));
 
 app.use('/', routes);
@@ -29,6 +32,10 @@ app.use('/post', post);
 app.use('/users', users);
 app.use('/admin', admin);
 app.use('/admin_login', admin);
+app.use('/categorias', routes);
+app.use('/number_page', routes);
+
+
 app.use('/erro', function(req, res) {
   var err = new Error('Not Found');
   err.status = 500;

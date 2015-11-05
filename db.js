@@ -5,7 +5,7 @@ var Schema = mongoose.Schema
 
 
 
-var db_url = process.env.MONGOHQ_URL || "mongodb://127.0.0.1:27017/node2blog",
+var db_url = process.env.MONGOHQ_URL || "mongodb://localhost:27017/node2blog",
     db = mongoose.connect(db_url);
 
 //  Schema MongoDB para os posts
@@ -14,9 +14,13 @@ var postSchema = new Schema({
     id: ObjectId,
     title: { type: String },
     title_sub: { type: String },
+    sub_title: { type: String },
     content: { type: String },
+    category: { type: String },
     date: { type: String },
-    img: {type : Buffer }
+    img: {type: String },
+    gostei: {type: Number },
+    nao_gostei: {type: Number }
 });
 
 //  Schema para os comentários
