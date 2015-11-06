@@ -4,42 +4,38 @@ block content
          CAROUSEL
          ==================================================
 
-        #myCarousel.carousel.slide(data-ride="carousel")
-            // Indicators
-            ol.carousel-indicators
-                li.active(data-target="#myCarousel", data-slide-to="0")
-                li(data-target="#myCarousel", data-slide-to="1")
-                li(data-target="#myCarousel", data-slide-to="2")
-                li(data-target="#myCarousel", data-slide-to="3")
-            // Wrapper for slides
-            .carousel-inner(role="listbox")
-                if posts.length > 0
+
+        if posts != null
+            #myCarousel.carousel.slide(data-ride="carousel")
+                // Indicators
+                ol.carousel-indicators
+                    li.active(data-target="#myCarousel", data-slide-to="0")
+                    li(data-target="#myCarousel", data-slide-to="1")
+                    li(data-target="#myCarousel", data-slide-to="2")
+                    li(data-target="#myCarousel", data-slide-to="3")
+                // Wrapper for slides
+                .carousel-inner(role="listbox")
                     each post, i in posts
                         if i > 2
 
+                        if i == 0
+                            .item.active
+                                img(src="#{post.img}", alt="#{post.title}")
+                                .carousel-caption
+                                    h3
+                                        a(href='/post/#{post._id}/#{post.title_sub}')= post.title
+                                    p
+                                        | #{post.sub_title}
                         else
-                            if i == 0
-                                .item.active
-                                    img(src="#{post.img}", alt="#{post.title}")
-                                    .carousel-caption
-                                        h3
-                                            a(href='/post/#{post._id}/#{post.title_sub}')= post.title
-                                        p
-                                            | #{post.sub_title}
-                            else
-                                .item
-                                    img(src="#{post.img}", alt="#{post.title}")
-                                    .carousel-caption
-                                        h3
-                                            a(href='/post/#{post._id}/#{post.title_sub}')= post.title
-                                        p
-                                            | #{post.sub_title}
-                else
-                    .item.active
-                        img(src="/images/img_posts/sem_foto.gif", alt="Sem foto")
-                        .carousel-caption
-                            h3 Sem Foto
-                            p Sem posts.
+                            .item
+                                img(src="#{post.img}", alt="#{post.title}")
+                                .carousel-caption
+                                    h3
+                                        a(href='/post/#{post._id}/#{post.title_sub}')= post.title
+                                    p
+                                        | #{post.sub_title}
+
+
 
             // Left and right controls
             a.left.carousel-control(href="#myCarousel", role="button", data-slide="prev")
